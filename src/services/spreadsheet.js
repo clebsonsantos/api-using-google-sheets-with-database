@@ -1,14 +1,14 @@
+const { GoogleSpreadsheet } = require("google-spreadsheet");
 const path = require("path")
 const crypto = require("crypto")
 const fs = require("fs/promises")
 
-const { GoogleSpreadsheet } = require("google-spreadsheet")
+const env = require("../config/env");
 
-const SPREADSHEET_ID  = process.env.SPREADSHEET_ID || ""
 
 async function AuthenticatedSpreadSheet() {
   try {
-    const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+    const doc = new GoogleSpreadsheet(env.spreadSheetId);
     const readFile = path.join(process.cwd(), "crendentials-google.json")
     const credentials = JSON.parse(await fs.readFile(readFile))
   
@@ -82,4 +82,4 @@ async function deleteValue(sheetRange, id){
 }
 
 
-module.exports = { AuthenticatedSpreadSheet, addRows, getValues, deleteValue}
+module.exports = { AuthenticatedSpreadSheet, addRows, getValues, deleteValue }
