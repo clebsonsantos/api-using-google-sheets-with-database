@@ -15,7 +15,7 @@ async function AuthenticatedSpreadSheet() {
     await doc.useServiceAccountAuth(credentials);
   
     await doc.loadInfo(); // loads document properties and worksheets
-    const sheetRange =  doc.sheetsByIndex[1]
+    const sheetRange =  doc.sheetsByIndex[env.rangerPosition]
 
     return {
       sheetRange
