@@ -3,7 +3,7 @@ const path = require("path")
 const crypto = require("crypto")
 const fs = require("fs/promises")
 
-const env = require("../config/env");
+const { env } = require("../config/env");
 
 
 async function AuthenticatedSpreadSheet() {
