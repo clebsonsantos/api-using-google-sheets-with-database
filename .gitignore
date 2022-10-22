@@ -2,3 +2,4 @@ crendentials-google.json
 node_modules
 .env
 package-lock.json
+fly.toml

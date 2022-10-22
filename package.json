@@ -7,7 +7,8 @@
     "node": "17.x"
   },
   "scripts": {
-    "start": "nodemon src/shared/server.js"
+    "dev": "nodemon src/shared/server.js",
+    "start": "node src/shared/server.js"
   },
   "author": "",
   "license": "ISC",
