@@ -31,8 +31,9 @@ class CreateExpense {
         data
       })
     } catch (e) {
-      return response.status(400).json({
-        erro: e.message
+      return response.status(500).json({
+        erro: e.message,
+        message: "Internal Server Error"
       })
     }
   }
