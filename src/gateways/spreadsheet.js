@@ -74,7 +74,6 @@ async function deleteValue(sheetRange, id){
   values.forEach((row) => {
     if (row.ID === id) {
       row.delete()
-      console.log(row)
       ok = true
     }
   })

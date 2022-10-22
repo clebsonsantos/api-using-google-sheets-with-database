@@ -6,8 +6,8 @@ class ListExpense {
       AuthenticatedSpreadSheet, 
       getValues
   }){
-    this.getValues = getValues
     this.AuthenticatedSpreadSheet = AuthenticatedSpreadSheet
+    this.getValues = getValues
   }
 
   async handle(request, response){
