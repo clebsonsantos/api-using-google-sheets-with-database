@@ -39,7 +39,7 @@ async function addRows(sheetRange, {
     VALOR,
     TIPO,
     CATEGORIA,
-    DATA: !DATA ? new Date().toLocaleDateString() + " às " + new Date().toLocaleTimeString() : DATA,
+    DATA: !DATA ? new Date().toLocaleDateString("pt-BR") + " às " + new Date().toLocaleTimeString() : DATA,
   })
   return rows
 }
