@@ -1,20 +1,22 @@
 
 class CreateExpense {
-  spreadSheet;
-  constructor(
-    spreadSheet
-  ){
-    this.spreadSheet = spreadSheet
+  AuthenticatedSpreadSheet 
+  addRows
+  constructor({
+    AuthenticatedSpreadSheet, 
+    addRows
+  }){
+    this.AuthenticatedSpreadSheet = AuthenticatedSpreadSheet
+    this.addRows = addRows
   }
 
   async handle(request, response){
     
     try {
-      const { AuthenticatedSpreadSheet, addRows } = this.spreadSheet
-      const { sheetRange } = await AuthenticatedSpreadSheet()
+      const { sheetRange } = await this.AuthenticatedSpreadSheet()
       const { nome, valor, tipo, categoria, data } = request.body
 
-      const value = await addRows(sheetRange, {
+      const value = await this.addRows(sheetRange, {
         NOME: nome,
         VALOR: valor,
         TIPO: tipo,

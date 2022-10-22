@@ -14,7 +14,7 @@ async function AuthenticatedSpreadSheet() {
   
     await doc.useServiceAccountAuth(credentials);
   
-    await doc.loadInfo(); // loads document properties and worksheets
+    await doc.loadInfo();
     const sheetRange =  doc.sheetsByIndex[env.rangerPosition]
 
     return {
@@ -80,5 +80,36 @@ async function deleteValue(sheetRange, id){
   return ok
 }
 
+async function updateRow(sheetRange, {
+  ID,
+  NOME,
+  VALOR,
+  TIPO,
+  CATEGORIA ,
+  DATA
+}){
+  const row = await sheetRange.getRows()
+  let existRow;
+  row.forEach((item)=> {
+    if (item.ID === ID) {
+      existRow = item
+    }
+  })
 
-module.exports = { AuthenticatedSpreadSheet, addRows, getValues, deleteValue }
+  if (!existRow) {
+    return false
+  }
+  const expense = existRow
+
+  expense.NOME = NOME ? NOME : expense.NOME
+  expense.VALOR = VALOR ? VALOR : expense.VALOR
+  expense.TIPO = TIPO ? TIPO : expense.TIPO
+  expense.CATEGORIA = CATEGORIA ? CATEGORIA : expense.CATEGORIA
+  expense.DATA = DATA ? DATA : expense.DATA
+
+  expense.save()
+
+  return expense
+}
+
+module.exports = { AuthenticatedSpreadSheet, addRows, getValues, deleteValue, updateRow }
