@@ -1,9 +1,10 @@
 const { Router } = require("express")
 const { CreateExpense } = require("../../controllers/create-expense")
 const { DeleteExpense } = require("../../controllers/delete-expense")
+const { GetUsersApp } = require("../../controllers/get-users-app")
 const { ListExpense } = require("../../controllers/list-expenses")
 const { UpdateExpense } = require("../../controllers/update-expense")
-const { AuthenticatedSpreadSheet, addRows, getValues, deleteValue, updateRow } = require("../../gateways/spreadsheet")
+const { AuthenticatedSpreadSheet, addRows, getValues, deleteValue, updateRow, getUsers } = require("../../gateways/spreadsheet")
 const { ensureAuthenticated } = require("../../middleware/auth")
 
 const routes = Router()
@@ -26,6 +27,11 @@ routes.delete("/expense/delete/:id", ensureAuthenticated, async (request, respon
 routes.put("/expense/update/:id", ensureAuthenticated, async (request, response) => {
   const updateExpenseController = new UpdateExpense({ AuthenticatedSpreadSheet, updateRow  })
   await updateExpenseController.handle(request, response)
+})
+
+routes.get("/users/list", ensureAuthenticated, async (request, response) => {
+  const usersController = new GetUsersApp({ AuthenticatedSpreadSheet, getUsers })
+  await usersController.handle(request, response)
 })
 
 module.exports = { 

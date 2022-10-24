@@ -6,7 +6,7 @@ const fs = require("fs/promises")
 const { env } = require("../config/env");
 
 
-async function AuthenticatedSpreadSheet() {
+async function AuthenticatedSpreadSheet(spreadSheetNameTab = env.spreadSheetNameTab) {
   try {
     const doc = new GoogleSpreadsheet(env.spreadSheetId);
     const readFile = path.join(process.cwd(), "crendentials-google.json")
@@ -15,7 +15,7 @@ async function AuthenticatedSpreadSheet() {
     await doc.useServiceAccountAuth(credentials);
   
     await doc.loadInfo();
-    const sheetRange =  doc.sheetsByTitle[env.spreadSheetNameTab]
+    const sheetRange =  doc.sheetsByTitle[spreadSheetNameTab]
 
     return {
       sheetRange
@@ -65,6 +65,21 @@ async function getValues(sheetRange){
   return result
 }
 
+async function getUsers(sheetRange) {
+  const values = await sheetRange.getRows()
+
+  const result = new Array()
+
+  values.forEach((item) => {
+      result.push({
+        id: crypto.randomUUID(),
+        nome: item.NOME,
+        email: item.EMAIL
+      })
+  })
+
+  return result
+}
 
 async function deleteValue(sheetRange, id){
 
@@ -112,4 +127,4 @@ async function updateRow(sheetRange, {
   return expense
 }
 
-module.exports = { AuthenticatedSpreadSheet, addRows, getValues, deleteValue, updateRow }
+module.exports = { AuthenticatedSpreadSheet, addRows, getValues, deleteValue, updateRow, getUsers }
